@@ -139,7 +139,7 @@ void Statements_Gozer_LBRACEStatementsRBRACE() {
 
     //this is before rbrace
     symbolTable->pop();
-    a$$ = new statement("");
+    a$$ = new statement();
 }
 
 void StatementGozerTypeIdSc()
@@ -171,26 +171,7 @@ void StatementGozer_While_LPAREN_exp_RPAREN_Statement()
         errorMismatch(yylineno);
         exit(0);
     }
-    symbolTable->AddNewTable();
-
-    //After Statement
-    symbolTable->pop();
-    a$$ = new statement();
-}
-
-
-void StatementGozer_While_LPAREN_exp_RPAREN_Statement()
-{
-    //open a block because of while statement
-    //open a block because of Braces?
-
-    string type = ((Exp*)a$3)->type;
-
-    if(type!="BOOL"){
-        errorMismatch(yylineno);
-        exit(0);
-    }
-    symbolTable->AddNewTable();
+    symbolTable->AddNewTable("WHILE");
 
     //After Statement
     symbolTable->pop();
@@ -203,7 +184,7 @@ void StatementGozerBreakSC() {
             errorUnexpectedBreak(yylineno);
             exit(0);
         }
-        $$ = new statement();
+        a$$ = new statement();
     };
 }
 
@@ -213,7 +194,7 @@ void StatementGozerContinueSC() {
             errorUnexpectedBreak(yylineno);
             exit(0);
         }
-        $$ = new statement();
+        a$$ = new statement();
     };
 }
 void Statement_Gozer_Type_Id_Assign_Exp_Cs()
@@ -224,7 +205,7 @@ void Statement_Gozer_Type_Id_Assign_Exp_Cs()
     const char* l_type = a$1->info.c_str();
     const char* r_type = tmp->type.c_str();
 
-    Symbol arg = *(new Symbol(id, l_type," ", 0));
+    Symbol arg = *(new Symbol(id, l_type, 0));
 
     //Check if ID already exists in containing block. If yes - ERROR.
     //Check if assign operator is legal. If no - ERROR.
@@ -242,81 +223,7 @@ void Statement_Gozer_Type_Id_Assign_Exp_Cs()
 
     symbolTable->addNewArg(arg);
 
-    a$$ = new statement("");
-
-}
-
-void Statements_Gozer_StatementsStatement()
-{
-    a$$ = new statements();
-}
-
-void Statements_Gozer_LBRACEStatementsRBRACE() {
-    type a = 0;
-
-    //open a new if block block right after lbrace
-    //pop the block after Statements
-
-    //this is right after lbrace
-    symbolTable->AddNewTable("");
-
-    //this is before rbrace
-    symbolTable->pop();
     a$$ = new statement();
-
-
-}
-
-void StatementGozerTypeIdSc()
-{
-
-    const char* id = a$2->info.c_str();
-    const char* type = a$1->info.c_str();
-
-    //Check if the a variable with the same ID was not declared on containing scope.
-    //Add to symbol table: Add this variable to the top table.
-
-    if(symbolTable->isArgExists(id))
-    {
-        //Report ERROR
-    }
-
-    //create new arg object and insert to the *last* table on the symbol table.
-    Symbol arg = *(new Symbol(id, type," ", 0));
-
-    symbolTable->addNewArg(arg);
-
-    a$$ = new statement("");
-
-}
-
-void Statement_Gozer_Type_Id_Assign_Exp_Cs()
-{
-    Exp * tmp = (Exp*)a$3;
-
-    const char* id = a$2->info.c_str();
-    const char* l_type = a$1->info.c_str();
-    const char* r_type = tmp->type.c_str();
-
-    Symbol arg = *(new Symbol(id, l_type," ", 0));
-
-    //Check if ID already exists in containing block. If yes - ERROR.
-    //Check if assign operator is legal. If no - ERROR.
-    //Add Arg to symbol table.
-
-    if(symbolTable->isArgExists(id))
-    {
-        //report ERROR
-    }
-
-    if(!symbolTable->isAssignLegal(l_type,r_type))
-    {
-        //report ERROR;
-    }
-
-    symbolTable->addNewArg(arg);
-
-    a$$ = new statement("");
 
 }
 

@@ -16,12 +16,11 @@ public:
     string Type;
     int Offset;
 
-    Symbol(const char* id, const char* t_type, const char* val, int lineno)
+    Symbol(const char* id, const char* t_type, int offset)
     {
-        ID = *(new string(id));
+        Name = *(new string(id));
         Type = *(new string(t_type));
-        value = *(new string(val));
-        lineNumber = lineno;
+        Offset = offset;
     }
 
     ~Symbol() = default;
