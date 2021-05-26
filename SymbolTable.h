@@ -75,6 +75,17 @@ public:
         return 0;
     }
 
+    bool isInsideWhile()
+    {
+//        if(this.top.type="WHILE"){
+//            return true;
+//        }
+//        else{
+//            return false
+//        }
+    }
+
+
 };
 
 

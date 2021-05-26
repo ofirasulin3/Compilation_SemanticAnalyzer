@@ -140,8 +140,6 @@ void Statements_Gozer_LBRACEStatementsRBRACE() {
     //this is before rbrace
     symbolTable->pop();
     a$$ = new statement("");
-
-
 }
 
 void StatementGozerTypeIdSc()
@@ -162,20 +160,62 @@ void StatementGozerTypeIdSc()
 
 }
 
-void StatementGozerWhileLPARENexpRPARENStatement()
+void StatementGozer_While_LPAREN_exp_RPAREN_Statement()
 {
     //open a block because of while statement
-    //open a block because of Braces
+    //open a block because of Braces?
 
     string type = ((Exp*)a$3)->type;
 
     if(type!="BOOL"){
         errorMismatch(yylineno);
+        exit(0);
     }
+    symbolTable->AddNewTable();
 
-
+    //After Statement
+    symbolTable->pop();
+    a$$ = new statement();
 }
 
+
+void StatementGozer_While_LPAREN_exp_RPAREN_Statement()
+{
+    //open a block because of while statement
+    //open a block because of Braces?
+
+    string type = ((Exp*)a$3)->type;
+
+    if(type!="BOOL"){
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    symbolTable->AddNewTable();
+
+    //After Statement
+    symbolTable->pop();
+    a$$ = new statement();
+}
+
+void StatementGozerBreakSC() {
+    {
+        if (!symbolTable->isInsideWhile()) {
+            errorUnexpectedBreak(yylineno);
+            exit(0);
+        }
+        $$ = new statement();
+    };
+}
+
+void StatementGozerContinueSC() {
+    {
+        if (!symbolTable->isInsideWhile()) {
+            errorUnexpectedBreak(yylineno);
+            exit(0);
+        }
+        $$ = new statement();
+    };
+}
 void Statement_Gozer_Type_Id_Assign_Exp_Cs()
 {
     Exp * tmp = (Exp*)a$3;
