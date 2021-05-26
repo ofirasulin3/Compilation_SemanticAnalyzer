@@ -82,6 +82,7 @@ public:
 //        else{
 //            return false
 //        }
+        return true;
     }
 
     int addNewArg(Symbol s)
@@ -96,7 +97,7 @@ public:
 
     Symbol searchSymbolByName(const char* name)
     {
-
+        return *(new Symbol("aa", "aa", 0));
     }
 
 };

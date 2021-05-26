@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.cpp" "/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/cmake-build-debug/CMakeFiles/Compilation_SemanticAnalyzer.dir/SymbolTable.cpp.o"
-  "/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.cpp" "/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/cmake-build-debug/CMakeFiles/Compilation_SemanticAnalyzer.dir/hw3_output.cpp.o"
-  "/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/main.cpp" "/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/cmake-build-debug/CMakeFiles/Compilation_SemanticAnalyzer.dir/main.cpp.o"
+  "C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.cpp" "C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/cmake-build-debug/CMakeFiles/Compilation_SemanticAnalyzer.dir/SymbolTable.cpp.obj"
+  "C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.cpp" "C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/cmake-build-debug/CMakeFiles/Compilation_SemanticAnalyzer.dir/hw3_output.cpp.obj"
+  "C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/main.cpp" "C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/cmake-build-debug/CMakeFiles/Compilation_SemanticAnalyzer.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

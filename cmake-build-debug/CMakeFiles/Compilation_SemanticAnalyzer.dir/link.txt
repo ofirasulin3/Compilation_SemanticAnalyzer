@@ -1,1 +1,3 @@
-/usr/bin/c++  -g   CMakeFiles/Compilation_SemanticAnalyzer.dir/hw3_output.cpp.o CMakeFiles/Compilation_SemanticAnalyzer.dir/main.cpp.o CMakeFiles/Compilation_SemanticAnalyzer.dir/SymbolTable.cpp.o  -o Compilation_SemanticAnalyzer 
+"C:\Program Files\JetBrains\CLion 2021.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Compilation_SemanticAnalyzer.dir/objects.a
+C:\TDM-GCC-64\bin\ar.exe cr CMakeFiles\Compilation_SemanticAnalyzer.dir/objects.a @CMakeFiles\Compilation_SemanticAnalyzer.dir\objects1.rsp
+C:\TDM-GCC-64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Compilation_SemanticAnalyzer.dir/objects.a -Wl,--no-whole-archive -o Compilation_SemanticAnalyzer.exe -Wl,--out-implib,libCompilation_SemanticAnalyzer.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Compilation_SemanticAnalyzer.dir\linklibs.rsp

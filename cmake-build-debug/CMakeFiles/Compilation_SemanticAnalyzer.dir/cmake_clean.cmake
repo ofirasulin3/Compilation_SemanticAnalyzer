@@ -1,9 +1,11 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Compilation_SemanticAnalyzer.dir/hw3_output.cpp.o"
-  "CMakeFiles/Compilation_SemanticAnalyzer.dir/main.cpp.o"
-  "CMakeFiles/Compilation_SemanticAnalyzer.dir/SymbolTable.cpp.o"
+  "CMakeFiles/Compilation_SemanticAnalyzer.dir/SymbolTable.cpp.obj"
+  "CMakeFiles/Compilation_SemanticAnalyzer.dir/hw3_output.cpp.obj"
+  "CMakeFiles/Compilation_SemanticAnalyzer.dir/main.cpp.obj"
+  "Compilation_SemanticAnalyzer.exe"
+  "Compilation_SemanticAnalyzer.exe.manifest"
   "Compilation_SemanticAnalyzer.pdb"
-  "Compilation_SemanticAnalyzer"
+  "libCompilation_SemanticAnalyzer.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -6,41 +6,41 @@
 
 #IncludeRegexTransform: 
 
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.cpp
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.cpp
 SymbolTable.h
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.h
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.h
 
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.h
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.h
 helpers.h
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/helpers.h
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/helpers.h
 
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/helpers.h
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/helpers.h
 string
 -
 vector
 -
 
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.cpp
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.cpp
 iostream
 -
 hw3_output.h
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.h
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.h
 sstream
 -
 
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.h
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.h
 vector
 -
 string
 -
 
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/main.cpp
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/main.cpp
 iostream
 -
 SymbolTable.h
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.h
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/SymbolTable.h
 hw3_output.h
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.h
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/hw3_output.h
 helpers.h
-/mnt/c/Users/ofira/CLionProjects/Compilation_SemanticAnalyzer/helpers.h
+C:/Users/guy/CLionProjects/Compilation_SemanticAnalyzer/helpers.h
 
