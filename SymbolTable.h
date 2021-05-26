@@ -85,6 +85,20 @@ public:
 //        }
     }
 
+    int addNewArg(Symbol s)
+    {
+        return 0;
+    }
+
+    bool isAssignLegal(const char* type1, const char* type2)
+    {
+        return true;
+    }
+
+    Symbol searchSymbolByName(const char* name)
+    {
+
+    }
 
 };
 

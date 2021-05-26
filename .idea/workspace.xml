@@ -11,9 +11,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4dd46ff3-c528-43a3-80e1-4913b22549c6" name="Default Changelist" comment="Completed Gozer_Type_Id_Assign_Exp_Cs">
-      <change beforePath="$PROJECT_DIR$/.idea/compi_3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compi_3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4dd46ff3-c528-43a3-80e1-4913b22549c6" name="Default Changelist" comment="created cmake">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SymbolTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/SymbolTable.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +67,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1622036771170</updated>
-      <workItem from="1622036773365" duration="860000" />
+      <workItem from="1622036773365" duration="1546000" />
     </task>
     <task id="LOCAL‎00001" summary="Completed Gozer_Type_Id_Assign_Exp_Cs">
       <created>1622036939410</created>
@@ -75,7 +75,13 @@
       <option name="presentableId" value="LOCAL‎00001" />
       <updated>1622036939410</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL‎00002" summary="created cmake">
+      <created>1622037720133</created>
+      <option name="number" value="LOCAL‎00002" />
+      <option name="presentableId" value="LOCAL‎00002" />
+      <updated>1622037720133</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,6 +100,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Completed Gozer_Type_Id_Assign_Exp_Cs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed Gozer_Type_Id_Assign_Exp_Cs" />
+    <MESSAGE value="cre" />
+    <MESSAGE value="created cmake" />
+    <option name="LAST_COMMIT_MESSAGE" value="created cmake" />
   </component>
 </project>

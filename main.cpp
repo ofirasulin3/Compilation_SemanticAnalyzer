@@ -246,6 +246,104 @@ void Statement_Gozer_Type_Id_Assign_Exp_Cs()
 
 }
 
+void Statements_Gozer_StatementsStatement()
+{
+    a$$ = new statements();
+}
+
+void Statements_Gozer_LBRACEStatementsRBRACE() {
+    type a = 0;
+
+    //open a new if block block right after lbrace
+    //pop the block after Statements
+
+    //this is right after lbrace
+    symbolTable->AddNewTable("");
+
+    //this is before rbrace
+    symbolTable->pop();
+    a$$ = new statement();
+
+
+}
+
+void StatementGozerTypeIdSc()
+{
+
+    const char* id = a$2->info.c_str();
+    const char* type = a$1->info.c_str();
+
+    //Check if the a variable with the same ID was not declared on containing scope.
+    //Add to symbol table: Add this variable to the top table.
+
+    if(symbolTable->isArgExists(id))
+    {
+        //Report ERROR
+    }
+
+    //create new arg object and insert to the *last* table on the symbol table.
+    Symbol arg = *(new Symbol(id, type," ", 0));
+
+    symbolTable->addNewArg(arg);
+
+    a$$ = new statement("");
+
+}
+
+void Statement_Gozer_Type_Id_Assign_Exp_Cs()
+{
+    Exp * tmp = (Exp*)a$3;
+
+    const char* id = a$2->info.c_str();
+    const char* l_type = a$1->info.c_str();
+    const char* r_type = tmp->type.c_str();
+
+    Symbol arg = *(new Symbol(id, l_type," ", 0));
+
+    //Check if ID already exists in containing block. If yes - ERROR.
+    //Check if assign operator is legal. If no - ERROR.
+    //Add Arg to symbol table.
+
+    if(symbolTable->isArgExists(id))
+    {
+        //report ERROR
+    }
+
+    if(!symbolTable->isAssignLegal(l_type,r_type))
+    {
+        //report ERROR;
+    }
+
+    symbolTable->addNewArg(arg);
+
+    a$$ = new statement("");
+
+}
+
+void Statement_Gozer_Id_Assign_Exp_Cs()
+{
+    Exp * tmp = (Exp*)a$3;
+
+    const char* id = a$1->info.c_str();
+    const char* r_type = tmp->type.c_str();
+
+    const char* l_type = symbolTable->searchSymbolByName(id).Type.c_str();
+
+    //Check if Id exists on containing scope. If not - return ERROR.
+    //Check if assign is legal. If not - return ERROR.
+    if(!symbolTable->isArgExists(r_type))
+    {
+        //return ERROR
+    }
+
+    if(!symbolTable->isAssignLegal(l_type,r_type))
+    {
+        //report ERROR
+    }
+
+    a$$ = new statement("");
+}
+
 int main()
 {
     printf("ho");
