@@ -176,7 +176,35 @@ void StatementGozerWhileLPARENexpRPARENStatement()
 
 }
 
+void Statement_Gozer_Type_Id_Assign_Exp_Cs()
+{
+    Exp * tmp = (Exp*)a$3;
 
+    const char* id = a$2->info.c_str();
+    const char* l_type = a$1->info.c_str();
+    const char* r_type = tmp->type.c_str();
+
+    Symbol arg = *(new Symbol(id, l_type," ", 0));
+
+    //Check if ID already exists in containing block. If yes - ERROR.
+    //Check if assign operator is legal. If no - ERROR.
+    //Add Arg to symbol table.
+
+    if(symbolTable->isArgExists(id))
+    {
+        //report ERROR
+    }
+
+    if(!symbolTable->isAssignLegal(l_type,r_type))
+    {
+        //report ERROR;
+    }
+
+    symbolTable->addNewArg(arg);
+
+    a$$ = new statement("");
+
+}
 
 int main()
 {
