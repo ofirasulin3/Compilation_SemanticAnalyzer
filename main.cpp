@@ -43,7 +43,7 @@ void FuncsGozerFuncsDeclFuncs3()
     a$$ = new Funcs();
 }
 
-void FuncDeclGozerBlaBla4(int x)
+void FuncDeclGozerBlaBla4()
 {
 
     //RetType ID LPAREN Formals RPAREN LBRACE Statements RBRACE
@@ -60,7 +60,7 @@ void FuncDeclGozerBlaBla4(int x)
     //TODO: But before LBRACE Statements RBRACE
 
     RetType* tmp1 = (RetType*) a$1;
-    Node * tmp2 = (funcDeclaration*) a$2;
+    //Node * tmp2 = (funcDeclaration*) a$2;
     Formals * tmp4 = (Formals*) a$4;
 
     if(symbolTable->isFuncExists(funcToAdd))
@@ -129,7 +129,6 @@ void Statements_Gozer_StatementsStatement()
 }
 
 void Statements_Gozer_LBRACEStatementsRBRACE() {
-    type a = 0;
 
     //open a new if block block right after lbrace
     //pop the block after Statements
@@ -307,7 +306,6 @@ void StatementGozer_SWITCH_LPAREN_exp_RPAREN_Statement_ELSE()
 void ExpList_Gozer_Exp()
 {
     a$$ = new EXPlist((Exp*)a$1);
-    //why not a$$ = new EXP(a$1);
 }
 
 void ExpList_Gozer_Exp_COMMA_ExpList()
