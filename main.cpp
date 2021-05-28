@@ -135,7 +135,7 @@ void Statements_Gozer_LBRACEStatementsRBRACE() {
     //pop the block after Statements
 
     //this is right after lbrace
-    symbolTable->AddNewTable("IF scope");
+    symbolTable->AddNewTable("BLOCK");
 
     //this is before rbrace
     symbolTable->pop();
@@ -179,24 +179,21 @@ void StatementGozer_While_LPAREN_exp_RPAREN_Statement()
 }
 
 void StatementGozerBreakSC() {
-    {
-        if (!symbolTable->isInsideWhile()) {
-            errorUnexpectedBreak(yylineno);
-            exit(0);
-        }
-        a$$ = new statement();
-    };
+    if (!symbolTable->isInsideWhile()) {
+        errorUnexpectedBreak(yylineno);
+        exit(0);
+    }
+    a$$ = new statement();
 }
 
 void StatementGozerContinueSC() {
-    {
-        if (!symbolTable->isInsideWhile()) {
-            errorUnexpectedBreak(yylineno);
-            exit(0);
-        }
-        a$$ = new statement();
-    };
+    if (!symbolTable->isInsideWhile()) {
+        errorUnexpectedBreak(yylineno);
+        exit(0);
+    }
+    a$$ = new statement();
 }
+
 void Statement_Gozer_Type_Id_Assign_Exp_Cs()
 {
     Exp * tmp = (Exp*)a$3;
@@ -248,7 +245,74 @@ void Statement_Gozer_Id_Assign_Exp_Cs()
         //report ERROR
     }
 
-    a$$ = new statement("");
+    a$$ = new statement();
+}
+
+void StatementGozer_IF_LPAREN_exp_RPAREN_Statement_precIF()
+{
+    //open a block because of while statement
+    //open a block because of Braces?
+
+    string type = ((Exp*)a$3)->type;
+
+    if(type!="BOOL"){
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    symbolTable->AddNewTable("IF");
+
+    //After Statement
+    symbolTable->pop();
+    a$$ = new statement();
+}
+
+void StatementGozer_IF_LPAREN_exp_RPAREN_Statement_ELSE()
+{
+    //open a block because of while statement
+    //open a block because of Braces?
+
+    string type = ((Exp*)a$3)->type;
+
+    if(type!="BOOL"){
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    symbolTable->AddNewTable("IF");
+
+    symbolTable->AddNewTable("ELSE");
+
+    //After Statement
+    symbolTable->pop();
+    a$$ = new statement();
+}
+
+void StatementGozer_SWITCH_LPAREN_exp_RPAREN_Statement_ELSE()
+{
+    //open a block because of while statement
+    //open a block because of Braces?
+
+    string type = ((Exp*)a$3)->type;
+
+    if(type!="BOOL"){
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    symbolTable->AddNewTable("IF");
+
+    //After Statement
+    symbolTable->pop();
+    a$$ = new statement();
+}
+
+void ExpList_Gozer_Exp()
+{
+    a$$ = new EXPlist((Exp*)a$1);
+    //why not a$$ = new EXP(a$1);
+}
+
+void ExpList_Gozer_Exp_COMMA_ExpList()
+{
+    a$$ = new EXPlist((Exp*)a$1,(EXPlist*)a$3);
 }
 
 int main()

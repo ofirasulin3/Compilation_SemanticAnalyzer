@@ -136,9 +136,9 @@ class EXPlist : public Node
 {
 public:
     vector<Exp> vectorOfExp;
-    EXPlist(Exp* exp, const char* data, EXPlist* expList = NULL)
+    EXPlist(Exp* exp, EXPlist* expList = NULL)
     {
-        info = *(new string(data));
+        //info = *(new string(data));
         this->vectorOfExp.push_back(*exp);
         if(expList!=NULL)
         {
