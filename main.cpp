@@ -63,7 +63,7 @@ void FuncDeclGozerBlaBla4()
     //Node * tmp2 = (funcDeclaration*) a$2;
     Formals * tmp4 = (Formals*) a$4;
 
-    if(symbolTable->isFuncExists(funcToAdd))
+    if(symbolTable->isFuncExistsByName(funcToAdd))
     {
         //report ERROR
     }
@@ -384,9 +384,80 @@ void Exp_Gozer_Exp_RELOP_Exp()
     a$$ = new Exp("","BOOL");
 }
 
+void statement_gozer_Return_sc()
+{
+    //Check if function return type is void - report ERROR
+    if(symbolTable->getLastFunc().returnType!="void")
+    {
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    a$$ = new statement("");
+}
+
+void statement_gozer_return_ex_sc()
+{
+
+    const char* type = ((Exp*)a$2)->type.c_str();
+
+    //Check if function return type is same as expression type - report ERROR
+    if(symbolTable->getLastFunc().returnType!=type)
+    {
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    a$$ = new statement("");
+}
+
+void call_gozer_id_lparen_explist_rparen()
+{
+    //Check if function name already exists
+    //Check argument match
+    EXPlist * tmp = (EXPlist*)a$3;
+    vector<formalDeclaration> tmp1;
+    vector<formalDeclaration> paramList;
+    vector<Exp> vectorOfExp = tmp->vectorOfExp;
+    vector<string> idVector;
+    while(vectorOfExp.size()>0)
+    {
+        const char* param_type = vectorOfExp.back().type.c_str();
+        idVector.push_back(*(new string(param_type)));
+        vectorOfExp.pop_back();
+        formalDeclaration * toInsert = new formalDeclaration(param_type, "", 0);
+        tmp1.push_back((*toInsert));
+    }
+
+    for(int i = 0; i<tmp1.size(); i++)
+    {
+            paramList[i] = tmp1[tmp1.size()-1-i];
+    }
+
+    const char* funcName = a$1->info.c_str();
+
+
+    funcDeclaration * newFunc = new funcDeclaration(funcName,paramList , " ");
+
+    if(!symbolTable->isFuncExistsByName(*newFunc))
+    {
+        errorUndefFunc(yylineno,((Node*)a$1)->info);
+        exit(0);
+    }
+
+    if(!symbolTable->isFunctionExist(*newFunc, false))
+    {
+        errorPrototypeMismatch(yylineno,newFunc->funcName, idVector);
+        exit(0);
+    }
+
+
+
+}
+
 int main()
 {
     printf("ho");
+
+
     return 0;
 }
 

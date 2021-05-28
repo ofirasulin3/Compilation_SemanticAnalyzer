@@ -52,7 +52,7 @@ public:
         return 0;
     }
 
-    int isFuncExists(funcDeclaration & funcToAdd)
+    int isFuncExistsByName(funcDeclaration funcToSearch)
     {
         return 0;
         //TODO: Check if func exists in DB
@@ -98,6 +98,17 @@ public:
     Symbol searchSymbolByName(const char* name)
     {
         return *(new Symbol("aa", "aa", 0));
+    }
+
+    funcDeclaration getLastFunc()
+    {
+
+    }
+
+    bool isFunctionExist(funcDeclaration f, bool checkType)
+    {
+        //Check if function exists in database, with same parameters.
+        //If checkType=true, we also check return type.
     }
 
 };
