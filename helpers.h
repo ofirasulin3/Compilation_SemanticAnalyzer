@@ -159,11 +159,11 @@ public:
     string ID;
 
     //TODO: maybe need explicit?
-    call(const char * data, const char* t_type, const char* name, EXPlist* expList = NULL)
+    call(/*const char * data, */const char* t_type, const char* id, EXPlist* expList = NULL)
     {
-        info = *(new string(data));
+        //info = *(new string(data));
         type = *(new string(t_type)); //return type of function
-        ID = *(new string(name));//function name
+        ID = *(new string(id));//function name
 
         if(expList)
         {

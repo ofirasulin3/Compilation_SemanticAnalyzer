@@ -313,6 +313,77 @@ void ExpList_Gozer_Exp_COMMA_ExpList()
     a$$ = new EXPlist((Exp*)a$1,(EXPlist*)a$3);
 }
 
+void Exp_Gozer_LPAREN_Exp_RPAREN()
+{
+    a$$ = new Exp("", ((Exp*)a$1)->type.c_str());
+}
+
+void Exp_Gozer_Exp_BINOP_Exp()
+{
+    string leftType = ((Exp*)a$1)->type;
+    string rightType = ((Exp*)a$3)->type;
+    if((leftType != "INT" && leftType != "BYTE") || (rightType != "INT" && rightType != "BYTE")){
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    else{
+        string resultType;
+        if(leftType == "INT" || rightType != "INT")
+            resultType = "INT";
+        else
+            resultType = "BYTE";
+        a$$ = new Exp("", resultType.c_str());
+    }
+}
+
+void Exp_Gozer_Call()
+{
+    a$$ = new Exp("", ((call*)a$1)->type.c_str());
+}
+
+void Exp_Gozer_NUM()
+{
+    a$$ = new Exp("", "INT");
+}
+
+void Exp_Gozer_STRING()
+{
+    a$$ = new Exp(((Exp*)a$1)->info.c_str(), "STRING");
+}
+
+void Exp_Gozer_Exp_AND_Exp()
+{
+    string leftType = ((Exp*)a$1)->type;
+    string rightType = ((Exp*)a$3)->type;
+    if(leftType!="BOOL" || rightType!="BOOL"){
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    a$$ = new Exp("","BOOL");
+}
+
+void Exp_Gozer_Exp_OR_Exp()
+{
+    string leftType = ((Exp*)a$1)->type;
+    string rightType = ((Exp*)a$3)->type;
+    if(leftType!="BOOL" || rightType!="BOOL"){
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    a$$ = new Exp("","BOOL");
+}
+
+void Exp_Gozer_Exp_RELOP_Exp()
+{
+    string leftType = ((Exp*)a$1)->type;
+    string rightType = ((Exp*)a$3)->type;
+    if((leftType != "INT" && leftType != "BYTE") || (rightType != "INT" && rightType != "BYTE")){
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    a$$ = new Exp("","BOOL");
+}
+
 int main()
 {
     printf("ho");
