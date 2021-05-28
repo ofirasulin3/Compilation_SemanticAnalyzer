@@ -157,6 +157,7 @@ public:
     EXPlist expList;
     string type;
     string ID;
+    bool hasList;
 
     //TODO: maybe need explicit?
     call(/*const char * data, */const char* t_type, const char* id, EXPlist* expList = NULL)
@@ -168,6 +169,7 @@ public:
         if(expList)
         {
             this->expList = *expList;
+            hasList = true;
         }
     }
     ~call()  = default;

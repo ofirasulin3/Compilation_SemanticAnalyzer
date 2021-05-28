@@ -100,15 +100,22 @@ public:
         return *(new Symbol("aa", "aa", 0));
     }
 
-    funcDeclaration getLastFunc()
+    funcDeclaration * getLastFunc()
     {
-
+        return NULL;
     }
 
     bool isFunctionExist(funcDeclaration f, bool checkType)
     {
         //Check if function exists in database, with same parameters.
         //If checkType=true, we also check return type.
+        return true;
+    }
+
+    char* getFunctionType(const char* funcName)
+    {
+        return NULL;
+        //return the function's return type
     }
 
 };

@@ -62,18 +62,22 @@ void FuncDeclGozerBlaBla4()
     RetType* tmp1 = (RetType*) a$1;
     //Node * tmp2 = (funcDeclaration*) a$2;
     Formals * tmp4 = (Formals*) a$4;
-
-    if(symbolTable->isFuncExistsByName(funcToAdd))
-    {
-        //report ERROR
-    }
-
-    if(symbolTable->argDuplicateInFuncSig(funcToAdd)) //TODO: Send real object referenced by $4
-    {
-        //Report ERROR
-    }
-
     funcDeclaration * toInsert = new funcDeclaration(tmp1->info.c_str(), tmp4->FormalDeclarationsList.formalsListDec,tmp1->retType.c_str());
+    int dupelicateIndex;
+
+
+    if(symbolTable->isFuncExistsByName(*toInsert))
+    {
+        errorDef(yylineno, toInsert->funcName);
+    }
+
+    dupelicateIndex = symbolTable->argDuplicateInFuncSig(funcToAdd);
+
+    if(dupelicateIndex!= -1) //TODO: Send real object referenced by $4
+    {
+        errorDef(yylineno, toInsert->paramList[dupelicateIndex].name);
+    }
+
 
     symbolTable->addFunc(*toInsert);
 
@@ -151,7 +155,7 @@ void StatementGozerTypeIdSc()
 
     if(symbolTable->isArgExists(id))
     {
-        //Report ERROR
+        errorDef(yylineno,((Node*)a$2)->info);
     }
 
     //create new arg object and insert to the *last* table on the symbol table.
@@ -209,12 +213,12 @@ void Statement_Gozer_Type_Id_Assign_Exp_Cs()
 
     if(symbolTable->isArgExists(id))
     {
-        //report ERROR
+        errorDef(yylineno,((Node*)a$2)->info);
     }
 
     if(!symbolTable->isAssignLegal(l_type,r_type))
     {
-        //report ERROR;
+        errorMismatch(yylineno);
     }
 
     symbolTable->addNewArg(arg);
@@ -236,12 +240,12 @@ void Statement_Gozer_Id_Assign_Exp_Cs()
     //Check if assign is legal. If not - return ERROR.
     if(!symbolTable->isArgExists(r_type))
     {
-        //return ERROR
+        errorUndef(yylineno,((Node*)a$1)->info);
     }
 
     if(!symbolTable->isAssignLegal(l_type,r_type))
     {
-        //report ERROR
+        errorMismatch(yylineno);
     }
 
     a$$ = new statement();
@@ -387,7 +391,7 @@ void Exp_Gozer_Exp_RELOP_Exp()
 void statement_gozer_Return_sc()
 {
     //Check if function return type is void - report ERROR
-    if(symbolTable->getLastFunc().returnType!="void")
+    if(symbolTable->getLastFunc()->returnType!="void")
     {
         errorMismatch(yylineno);
         exit(0);
@@ -401,7 +405,7 @@ void statement_gozer_return_ex_sc()
     const char* type = ((Exp*)a$2)->type.c_str();
 
     //Check if function return type is same as expression type - report ERROR
-    if(symbolTable->getLastFunc().returnType!=type)
+    if(symbolTable->getLastFunc()->returnType!=type)
     {
         errorMismatch(yylineno);
         exit(0);
@@ -449,9 +453,84 @@ void call_gozer_id_lparen_explist_rparen()
         exit(0);
     }
 
+    a$$ = new call(symbolTable->getFunctionType(funcName), funcName);
 
 
 }
+
+void call_gozer_ID_Lparen_rparen()
+{
+    //Check if function exists in DB
+    //Check parameters match
+    const char* funcName = a$1->info.c_str();
+    vector<formalDeclaration> paramList;
+    funcDeclaration * newFunc = new funcDeclaration(funcName,paramList , " ");
+
+
+    if(!symbolTable->isFuncExistsByName(*newFunc))
+    {
+        errorUndefFunc(yylineno,((Node*)a$1)->info);
+        exit(0);
+    }
+
+}
+
+void exp_gozer_id()
+{
+    //Check if ID exist on DB. If not - report ERROR.
+    if(!symbolTable->isArgExists(a$1->info.c_str()))
+    {
+        errorUndef(yylineno,((Node*)a$1)->info);
+        exit(0);
+    }
+
+    a$$ = new Exp("", symbolTable->searchSymbolByName(a$1->info.c_str()).Type.c_str());
+}
+
+void exp_gozer_numb()
+{
+    int maxVal = 255;
+    if(stoi(((Node*)a$1)->info) > maxVal)
+    {
+        errorByteTooLarge(yylineno,((Node*)a$1)->info);
+        exit(0);
+    }
+}
+
+void exp_gozer_not_exp()
+{
+    Exp* tmp = (Exp*)a$2;
+    if(tmp->type == *(new string("bool")))
+    {
+        a$$ = new Exp("bool","");
+    }
+    else
+    {
+        errorMismatch(yylineno);
+        exit(0);
+    }
+}
+
+void statement_gozer_callSC()
+{
+    a$$ = new statement();
+}
+
+void type_gozer_int()
+{
+    a$$ = new Type("","INT");
+}
+
+void type_gozer_byte()
+{
+    a$$ = new Type("","byte");
+}
+
+void type_gozer_bool()
+{
+    a$$ = new Type("","bool");
+}
+
 
 int main()
 {
