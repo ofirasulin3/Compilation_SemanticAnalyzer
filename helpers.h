@@ -233,5 +233,26 @@ public:
     ~RetType() = default;
 };
 
+//class CaseDecl: public Node
+//{
+//public:
+//    int caseNum;
+//
+//    CaseDecl(int caseNumToEnter)
+//    {
+//        caseNum = caseNumToEnter;
+//    }
+//    ~CaseDecl() = default;
+//};
+
+class CaseList: public Node
+{
+public:
+
+    CaseList() = default;
+    ~CaseList() = default;
+};
+
+
 
 #endif //COMPI_3_HELPERS_H

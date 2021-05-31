@@ -63,7 +63,7 @@ void FuncDeclGozerBlaBla4()
     //Node * tmp2 = (funcDeclaration*) a$2;
     Formals * tmp4 = (Formals*) a$4;
     funcDeclaration * toInsert = new funcDeclaration(tmp1->info.c_str(), tmp4->FormalDeclarationsList.formalsListDec,tmp1->retType.c_str());
-    int dupelicateIndex;
+    int duplicateIndex;
 
 
     if(symbolTable->isFuncExistsByName(*toInsert))
@@ -71,13 +71,12 @@ void FuncDeclGozerBlaBla4()
         errorDef(yylineno, toInsert->funcName);
     }
 
-    dupelicateIndex = symbolTable->argDuplicateInFuncSig(funcToAdd);
+    duplicateIndex = symbolTable->argDuplicateInFuncSig(funcToAdd);
 
-    if(dupelicateIndex!= -1) //TODO: Send real object referenced by $4
+    if(duplicateIndex!= -1) //TODO: Send real object referenced by $4
     {
-        errorDef(yylineno, toInsert->paramList[dupelicateIndex].name);
+        errorDef(yylineno, toInsert->paramList[duplicateIndex].name);
     }
-
 
     symbolTable->addFunc(*toInsert);
 
@@ -138,7 +137,7 @@ void Statements_Gozer_LBRACEStatementsRBRACE() {
     //pop the block after Statements
 
     //this is right after lbrace
-    symbolTable->AddNewTable("BLOCK");
+    symbolTable->AddNewTable("REGULAR SCOPE");
 
     //this is before rbrace
     symbolTable->pop();
@@ -153,7 +152,7 @@ void StatementGozerTypeIdSc()
     //Check if the a variable with the same ID was not declared on containing scope.
     //Add to symbol table: Add this variable to the top table.
 
-    if(symbolTable->isArgExists(id))
+    if(symbolTable->isVarExists(id))
     {
         errorDef(yylineno,((Node*)a$2)->info);
     }
@@ -166,7 +165,7 @@ void StatementGozerTypeIdSc()
 void StatementGozer_While_LPAREN_exp_RPAREN_Statement()
 {
     //open a block because of while statement
-    //open a block because of Braces?
+    //No need to open a block because of Braces because it happens on statement rule
 
     string type = ((Exp*)a$3)->type;
 
@@ -211,7 +210,7 @@ void Statement_Gozer_Type_Id_Assign_Exp_Cs()
     //Check if assign operator is legal. If no - ERROR.
     //Add Arg to symbol table.
 
-    if(symbolTable->isArgExists(id))
+    if(symbolTable->isVarExists(id))
     {
         errorDef(yylineno,((Node*)a$2)->info);
     }
@@ -238,7 +237,7 @@ void Statement_Gozer_Id_Assign_Exp_Cs()
 
     //Check if Id exists on containing scope. If not - return ERROR.
     //Check if assign is legal. If not - return ERROR.
-    if(!symbolTable->isArgExists(r_type))
+    if(!symbolTable->isVarExists(r_type))
     {
         errorUndef(yylineno,((Node*)a$1)->info);
     }
@@ -254,7 +253,7 @@ void Statement_Gozer_Id_Assign_Exp_Cs()
 void StatementGozer_IF_LPAREN_exp_RPAREN_Statement_precIF()
 {
     //open a block because of while statement
-    //open a block because of Braces?
+    //No need to open a block because of Braces because it happens on statement rule
 
     string type = ((Exp*)a$3)->type;
 
@@ -272,7 +271,7 @@ void StatementGozer_IF_LPAREN_exp_RPAREN_Statement_precIF()
 void StatementGozer_IF_LPAREN_exp_RPAREN_Statement_ELSE()
 {
     //open a block because of while statement
-    //open a block because of Braces?
+    //No need to open a block because of Braces because it happens on statement rule
 
     string type = ((Exp*)a$3)->type;
 
@@ -283,24 +282,6 @@ void StatementGozer_IF_LPAREN_exp_RPAREN_Statement_ELSE()
     symbolTable->AddNewTable("IF");
 
     symbolTable->AddNewTable("ELSE");
-
-    //After Statement
-    symbolTable->pop();
-    a$$ = new statement();
-}
-
-void StatementGozer_SWITCH_LPAREN_exp_RPAREN_Statement_ELSE()
-{
-    //open a block because of while statement
-    //open a block because of Braces?
-
-    string type = ((Exp*)a$3)->type;
-
-    if(type!="BOOL"){
-        errorMismatch(yylineno);
-        exit(0);
-    }
-    symbolTable->AddNewTable("IF");
 
     //After Statement
     symbolTable->pop();
@@ -478,7 +459,7 @@ void call_gozer_ID_Lparen_rparen()
 void exp_gozer_id()
 {
     //Check if ID exist on DB. If not - report ERROR.
-    if(!symbolTable->isArgExists(a$1->info.c_str()))
+    if(!symbolTable->isVarExists(a$1->info.c_str()))
     {
         errorUndef(yylineno,((Node*)a$1)->info);
         exit(0);
@@ -530,6 +511,50 @@ void type_gozer_bool()
 {
     a$$ = new Type("","bool");
 }
+
+
+void StatementGozer_SWITCH_LPAREN_exp_RPAREN_LBRACE_CaseList_RBRACE()
+{
+    //open a block because of switch statement
+    //open a block because of Braces
+
+    string type = ((Exp*)a$3)->type;
+
+    if(!symbolTable->isVarExists(((Exp*)a$3)->info.c_str())){
+        errorDef(yylineno, ((Exp*)a$3)->info);
+        exit(0);
+    }
+    symbolTable->AddNewTable("SWITCH");
+
+    //After LBRACE
+    symbolTable->AddNewTable("SWITCH SCOPE");
+
+    //After RBRACE
+    symbolTable->pop();
+    symbolTable->pop();
+    a$$ = new statement();
+}
+
+void CaseList_Gozer_CaseDecl_CaseList()
+{
+    a$$ = new CaseList();
+}
+
+void CaseList_Gozer_CaseDecl()
+{
+    a$$ = new CaseList();
+}
+
+void CaseList_Gozer_DEFAULT_COLON_Statements()
+{
+    a$$ = new CaseList();
+}
+
+void CaseList_Gozer_CASE_NUM_COLON_Statements()
+{
+    a$$ = new CaseList();
+}
+
 
 
 int main()

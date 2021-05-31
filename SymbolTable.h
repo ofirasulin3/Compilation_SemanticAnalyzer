@@ -69,7 +69,7 @@ public:
         return 0;
     }
 
-    int isArgExists(const char* ID)
+    int isVarExists(const char* ID)
     {
         return 0;
     }
