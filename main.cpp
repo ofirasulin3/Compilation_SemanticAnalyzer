@@ -4,6 +4,7 @@
 #include "helpers.h"
 #define YYSTYPE Node*
 
+
 SymbolTable * symbolTable = new SymbolTable();
 /* Program -> funcs */
 Node * a$$ = new Node();
@@ -63,7 +64,7 @@ void FuncDeclGozerBlaBla4()
     //Node * tmp2 = (funcDeclaration*) a$2;
     Formals * tmp4 = (Formals*) a$4;
     funcDeclaration * toInsert = new funcDeclaration(tmp1->info.c_str(), tmp4->FormalDeclarationsList.formalsListDec,tmp1->retType.c_str());
-    int duplicateIndex;
+    int dupelicateIndex;
 
 
     if(symbolTable->isFuncExistsByName(*toInsert))
@@ -71,14 +72,19 @@ void FuncDeclGozerBlaBla4()
         errorDef(yylineno, toInsert->funcName);
     }
 
-    duplicateIndex = symbolTable->argDuplicateInFuncSig(funcToAdd);
+    dupelicateIndex = symbolTable->argDuplicateInFuncSig(*toInsert);
 
-    if(duplicateIndex!= -1) //TODO: Send real object referenced by $4
+    if(dupelicateIndex!= -1) //TODO: Send real object referenced by $4
     {
-        errorDef(yylineno, toInsert->paramList[duplicateIndex].name);
+        errorDef(yylineno, toInsert->paramList[dupelicateIndex].name);
     }
 
+
     symbolTable->addFunc(*toInsert);
+
+    //Symbol funcSym = (*new Symbol(tmp1->info.c_str(), "FUNCTION", 0));
+
+    symbolTable->AddNewTable(tmp1->info.c_str());
 
     //TODO: This adds after (LBRACE Statements RBRACE): (Not sure tho)
     symbolTable->pop();
@@ -93,7 +99,7 @@ void RetType_Gozer_Type()
 
 void RetType_Gozer_Void()
 {
-    a$$ = new RetType("void");
+    a$$ = new RetType("VOID");
 }
 
 void Formals_Gozer_Epsilon()
@@ -137,7 +143,7 @@ void Statements_Gozer_LBRACEStatementsRBRACE() {
     //pop the block after Statements
 
     //this is right after lbrace
-    symbolTable->AddNewTable("REGULAR SCOPE");
+    symbolTable->AddNewTable("BLOCK");
 
     //this is before rbrace
     symbolTable->pop();
@@ -233,14 +239,14 @@ void Statement_Gozer_Id_Assign_Exp_Cs()
     const char* id = a$1->info.c_str();
     const char* r_type = tmp->type.c_str();
 
-    const char* l_type = symbolTable->searchSymbolByName(id).Type.c_str();
-
     //Check if Id exists on containing scope. If not - return ERROR.
     //Check if assign is legal. If not - return ERROR.
     if(!symbolTable->isVarExists(r_type))
     {
         errorUndef(yylineno,((Node*)a$1)->info);
     }
+
+    const char* l_type = symbolTable->searchSymbolByName(id).Type.c_str();
 
     if(!symbolTable->isAssignLegal(l_type,r_type))
     {
@@ -282,6 +288,24 @@ void StatementGozer_IF_LPAREN_exp_RPAREN_Statement_ELSE()
     symbolTable->AddNewTable("IF");
 
     symbolTable->AddNewTable("ELSE");
+
+    //After Statement
+    symbolTable->pop();
+    a$$ = new statement();
+}
+
+void StatementGozer_SWITCH_LPAREN_exp_RPAREN_Statement_ELSE()
+{
+    //open a block because of while statement
+    //open a block because of Braces?
+
+    string type = ((Exp*)a$3)->type;
+
+    if(type!="BOOL"){
+        errorMismatch(yylineno);
+        exit(0);
+    }
+    symbolTable->AddNewTable("IF");
 
     //After Statement
     symbolTable->pop();
@@ -372,6 +396,9 @@ void Exp_Gozer_Exp_RELOP_Exp()
 void statement_gozer_Return_sc()
 {
     //Check if function return type is void - report ERROR
+
+
+
     if(symbolTable->getLastFunc()->returnType!="void")
     {
         errorMismatch(yylineno);
@@ -401,7 +428,7 @@ void call_gozer_id_lparen_explist_rparen()
     EXPlist * tmp = (EXPlist*)a$3;
     vector<formalDeclaration> tmp1;
     vector<formalDeclaration> paramList;
-    vector<Exp> vectorOfExp = tmp->vectorOfExp;
+    vector<Exp> vectorOfExp = *(new vector<Exp>(tmp->vectorOfExp));
     vector<string> idVector;
     while(vectorOfExp.size()>0)
     {
@@ -418,25 +445,20 @@ void call_gozer_id_lparen_explist_rparen()
     }
 
     const char* funcName = a$1->info.c_str();
-
-
     funcDeclaration * newFunc = new funcDeclaration(funcName,paramList , " ");
-
     if(!symbolTable->isFuncExistsByName(*newFunc))
     {
         errorUndefFunc(yylineno,((Node*)a$1)->info);
         exit(0);
     }
-
     if(!symbolTable->isFunctionExist(*newFunc, false))
     {
         errorPrototypeMismatch(yylineno,newFunc->funcName, idVector);
         exit(0);
     }
 
+
     a$$ = new call(symbolTable->getFunctionType(funcName), funcName);
-
-
 }
 
 void call_gozer_ID_Lparen_rparen()
@@ -447,12 +469,13 @@ void call_gozer_ID_Lparen_rparen()
     vector<formalDeclaration> paramList;
     funcDeclaration * newFunc = new funcDeclaration(funcName,paramList , " ");
 
-
     if(!symbolTable->isFuncExistsByName(*newFunc))
     {
         errorUndefFunc(yylineno,((Node*)a$1)->info);
         exit(0);
     }
+
+    a$$ = new call(symbolTable->getFunctionType(funcName), funcName);
 
 }
 

@@ -6,6 +6,7 @@
 #define COMPI_3_HELPERS_H
 #include <string>
 #include <vector>
+#include "hw3_output.h"
 
 using namespace std;
 
